@@ -1,0 +1,227 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Smart Count AI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='simple_factory_style.css') }}">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-content">
+      <div class="brand">
+        <div class="brand-icon">
+          <i class="fas fa-industry"></i>
+        </div>
+        <div class="brand-info">
+          <h1>Smart Count AI</h1>
+          <span class="tagline">Simple • Accurate • Reliable</span>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <button id="exportBtn" class="action-btn export">
+          <i class="fas fa-download"></i>
+          <span>Export Data</span>
+        </button>
+        <button id="resetBtn" class="action-btn reset">
+          <i class="fas fa-refresh"></i>
+          <span>Reset Session</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+
+    <!-- Left Panel: Image Analysis -->
+    <section class="panel analysis-panel">
+      <div class="panel-header">
+        <h2><i class="fas fa-camera"></i> Image Analysis</h2>
+      </div>
+
+      <!-- Camera/Upload Area -->
+      <div class="upload-area">
+        <div class="upload-zone" id="uploadZone">
+          <video id="video" autoplay playsinline class="camera-feed"></video>
+          <div class="upload-placeholder" id="uploadPlaceholder">
+            <i class="fas fa-cloud-upload-alt"></i>
+            <h3>Upload Image or Use Camera</h3>
+            <p>Drag & drop an image here or click to browse</p>
+            <input type="file" id="fileInput" accept="image/*" hidden>
+          </div>
+        </div>
+
+        <div class="upload-controls">
+          <button id="captureBtn" class="primary-btn">
+            <i class="fas fa-camera"></i>
+            <span>Capture & Analyze</span>
+          </button>
+          <label for="fileInput" class="secondary-btn">
+            <i class="fas fa-upload"></i>
+            <span>Upload Image</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Settings -->
+      <div class="settings-section">
+        <h3>Detection Settings</h3>
+        <div class="setting">
+          <label for="confidenceSlider">Minimum Confidence: <span id="confidenceValue">0.3</span></label>
+          <input type="range" id="confidenceSlider" min="0.1" max="0.9" step="0.1" value="0.3">
+        </div>
+      </div>
+    </section>
+
+    <!-- Center Panel: Results -->
+    <section class="panel results-panel">
+      <div class="panel-header">
+        <h2><i class="fas fa-chart-bar"></i> Detection Results</h2>
+      </div>
+
+      <!-- Main Metrics -->
+      <div class="metrics-grid">
+        <div class="metric-card primary">
+          <div class="metric-icon">
+            <i class="fas fa-bullseye"></i>
+          </div>
+          <div class="metric-content">
+            <div class="metric-value" id="detectedCount">0</div>
+            <div class="metric-label">Objects Detected</div>
+          </div>
+        </div>
+
+        <div class="metric-card secondary">
+          <div class="metric-icon">
+            <i class="fas fa-percentage"></i>
+          </div>
+          <div class="metric-content">
+            <div class="metric-value" id="confidenceScore">0%</div>
+            <div class="metric-label">Confidence</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Vibration Analysis -->
+      <div class="vibration-section">
+        <h3><i class="fas fa-wave-square"></i> Your Vibration Method Results</h3>
+        <div class="vibration-stats">
+          <div class="stat">
+            <span class="stat-label">Most Frequent Count:</span>
+            <span class="stat-value" id="mostFrequentCount">0</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">Consistency:</span>
+            <span class="stat-value" id="consistencyScore">0%</span>
+          </div>
+        </div>
+        <div class="recommendation" id="recommendation">
+          Take multiple images after physically vibrating the plate
+        </div>
+      </div>
+
+      <!-- Result Image -->
+      <div class="result-image-section">
+        <h3>Analysis Result</h3>
+        <div class="image-container">
+          <img id="resultImage" alt="Analysis result will appear here" class="result-image">
+          <div class="image-placeholder" id="imagePlaceholder">
+            <i class="fas fa-image"></i>
+            <span>Analysis result will appear here</span>
+          </div>
+          <div class="loading-overlay" id="loadingOverlay">
+            <div class="spinner"></div>
+            <span>Analyzing image...</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Right Panel: Analytics -->
+    <section class="panel analytics-panel">
+      <div class="panel-header">
+        <h2><i class="fas fa-chart-pie"></i> Analytics</h2>
+      </div>
+
+      <!-- Object Classification -->
+      <div class="classification-section">
+        <h3>Object Types</h3>
+        <div class="classification-grid">
+          <div class="classification-item">
+            <div class="item-icon nuts">
+              <i class="fas fa-circle"></i>
+            </div>
+            <div class="item-content">
+              <div class="item-label">Nuts</div>
+              <div class="item-count" id="nutsCount">0</div>
+            </div>
+          </div>
+
+          <div class="classification-item">
+            <div class="item-icon bolts">
+              <i class="fas fa-bolt"></i>
+            </div>
+            <div class="item-content">
+              <div class="item-label">Bolts</div>
+              <div class="item-count" id="boltsCount">0</div>
+            </div>
+          </div>
+
+          <div class="classification-item">
+            <div class="item-icon screws">
+              <i class="fas fa-screw"></i>
+            </div>
+            <div class="item-content">
+              <div class="item-label">Screws</div>
+              <div class="item-count" id="screwsCount">0</div>
+            </div>
+          </div>
+
+          <div class="classification-item">
+            <div class="item-icon washers">
+              <i class="fas fa-ring"></i>
+            </div>
+            <div class="item-content">
+              <div class="item-label">Washers</div>
+              <div class="item-count" id="washersCount">0</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Session Statistics -->
+      <div class="session-section">
+        <h3>Session Statistics</h3>
+        <div class="session-stats">
+          <div class="session-stat">
+            <span class="stat-label">Images Processed:</span>
+            <span class="stat-value" id="totalImages">0</span>
+          </div>
+          <div class="session-stat">
+            <span class="stat-label">Session Time:</span>
+            <span class="stat-value" id="sessionTime">0.0 min</span>
+          </div>
+          <div class="session-stat">
+            <span class="stat-label">Average Count:</span>
+            <span class="stat-value" id="averageCount">0</span>
+          </div>
+          <div class="session-stat">
+            <span class="stat-label">Count Range:</span>
+            <span class="stat-value" id="countRange">0 - 0</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Notification Area -->
+  <div id="notifications" class="notifications"></div>
+
+  <script src="{{ url_for('static', filename='simple_factory_script.js') }}"></script>
+</body>
+</html>
