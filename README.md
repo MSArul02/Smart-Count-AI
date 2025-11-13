@@ -7,6 +7,15 @@ This project showcases practical computer-vision engineering skills without usin
 
 ---
 
+## 🧪 Example Output
+
+<img width="1919" height="768" alt="image" src="https://github.com/user-attachments/assets/2509bd7a-da53-496e-8a66-bfd6b7370d49" />
+<img width="1919" height="764" alt="image" src="https://github.com/user-attachments/assets/f3590893-a809-4f62-81ed-00f54e04a954" />
+<img width="1919" height="769" alt="image" src="https://github.com/user-attachments/assets/c942946a-7d2e-4fd6-93d9-73b432d01045" />
+<img width="1919" height="772" alt="image" src="https://github.com/user-attachments/assets/1950bd22-287e-437f-a4b5-dcd3587896d4" />
+
+---
+
 ## 🚀 Features
 
 ### ✔ Classical CV Object Detection  
